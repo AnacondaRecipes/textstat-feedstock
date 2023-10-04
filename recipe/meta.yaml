@@ -29,8 +29,12 @@ test:
     - textstat
   requires:
     - pip
+    - pytest
+  source_files:
+    - test.py
   commands:
     - pip check
+    - pytest test.py
 
 about:
   home: https://github.com/shivam5992/textstat
