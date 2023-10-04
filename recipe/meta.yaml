@@ -1,5 +1,5 @@
 {% set name = "textstat" %}
-{% set version = "0.7.2" %}
+{% set version = "0.7.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,25 +7,30 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: d04aa648ffbfb54ee5ab4b3d434575c83a69b45704e6a3cbc03344d17552e819
+  sha256: 60b63cf8949f45bbb3b4205e4411bbc1cd66df4c08aef12545811c7e6e24f011
 
 build:
-  noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: True  # [py<36]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python
+    - setuptools
+    - wheel
   run:
     - pyphen
-    - python >=3.6
-    - setuptools
+    - python
 
 test:
   imports:
     - textstat
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/shivam5992/textstat
@@ -33,7 +38,9 @@ about:
   license_family: MIT
   license_file: LICENSE
   summary: Calculate statistical features from text
-  doc_url: https://pypi.org/project/textstat/
+  description: |
+    Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level.
+  doc_url: https://github.com/textstat/textstat
   dev_url: https://github.com/shivam5992/textstat
 
 extra:
